@@ -1,0 +1,3 @@
+﻿Build path: D:/Unity/UnityBuild
+Build number: 59
+PluginYG version: 2.007
