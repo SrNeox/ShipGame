@@ -17,4 +17,18 @@ public class SceneMachine : MonoBehaviour
         Time.timeScale = 0;
         SceneManager.LoadScene(_sceneGame);
     }
+
+    public void LoadNext()
+    {
+        int indexNextScene = SceneManager.GetActiveScene().buildIndex + 1;
+
+        if (indexNextScene >= SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(_sceneGame);
+        }
+        else
+        {
+            SceneManager.LoadScene(indexNextScene);
+        }
+    }
 }

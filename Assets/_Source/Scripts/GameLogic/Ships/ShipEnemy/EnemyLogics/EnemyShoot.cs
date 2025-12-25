@@ -12,6 +12,10 @@ namespace _Source.Scripts.GameLogic.Ships.ShipEnemy.EnemyLogics
         [Inject] private readonly PoolBullet _poolBullet;
         [Inject] private readonly Container _container;
 
+        [SerializeField] private GameObject _landingIndicatorPrefab;
+        [SerializeField] private float _arcHeight = 5f;
+        [SerializeField] private float _arcDuration = 3f;
+        
         private Transform[] _firePoints;
         private AudioSource _audioSource;
 
@@ -22,11 +26,7 @@ namespace _Source.Scripts.GameLogic.Ships.ShipEnemy.EnemyLogics
 
         private SearchPlayer _searchPlayer;
         private bool _isArcBulletInFlight;
-
-        [SerializeField] private GameObject _landingIndicatorPrefab;
-        [SerializeField] private float _arcHeight = 5f;
-        [SerializeField] private float _arcDuration = 2f;
-
+        
         private void Start()
         {
             SetFirePoints();

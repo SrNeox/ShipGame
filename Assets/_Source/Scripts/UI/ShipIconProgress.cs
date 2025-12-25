@@ -15,7 +15,7 @@ public class ShipIconProgress : MonoBehaviour
 
     private Health _health;
     private Vector3 _startPosition;
-    private int _currnetShipIcon = 0;
+    private int _currentShipIcon = 0;
 
     private void Start()
     {
@@ -47,10 +47,10 @@ public class ShipIconProgress : MonoBehaviour
     {
         Reset();
 
-        if (_currnetShipIcon < _shipIconAnimator.Length)
+        if (_currentShipIcon < _shipIconAnimator.Length)
         {
-            _shipIconAnimator[_currnetShipIcon].SetTrigger(NameAnimTrigger);
-            _currnetShipIcon++;
+            _shipIconAnimator[_currentShipIcon].SetTrigger(NameAnimTrigger);
+            _currentShipIcon++;
             _health.HealthOver -= PlayAnimation;
             MoveImageTarget();
         }
@@ -60,9 +60,9 @@ public class ShipIconProgress : MonoBehaviour
 
     private void Reset()
     {
-        if (_currnetShipIcon == _shipIconAnimator.Length)
+        if (_currentShipIcon == _shipIconAnimator.Length)
         {
-            _currnetShipIcon = 0;
+            _currentShipIcon = 0;
 
             foreach (var ship in _shipIconAnimator)
             {
@@ -73,8 +73,8 @@ public class ShipIconProgress : MonoBehaviour
 
     private void MoveImageTarget()
     {
-        if (_currnetShipIcon < _shipIconAnimator.Length)
-            _icon.transform.position = _shipIcon2[_currnetShipIcon].transform.position;
+        if (_currentShipIcon < _shipIconAnimator.Length)
+            _icon.transform.position = _shipIcon2[_currentShipIcon].transform.position;
         else
             _icon.transform.position = _startPosition;
     }

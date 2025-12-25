@@ -21,19 +21,16 @@ public class Shoot : MonoBehaviour
     private void Awake()
     {
         _drawLine = GetComponent<DrawLine>();
-        _drawLine.OnLineDrawn += ShooBulletUI; 
+        _drawLine.OnLineDrawn += ShooBulletUI;
 
         _pool = FindObjectOfType<PoolBullet>();
 
-        if (_pool == null)
-        {
-            Debug.LogError("PoolBullet not found in scene!");
-        }
+        if (_pool == null) return;
     }
 
     private void OnDestroy()
     {
-        _drawLine.OnLineDrawn -= ShooBulletUI; 
+        _drawLine.OnLineDrawn -= ShooBulletUI;
     }
 
     public void Init(Transform firePoint, float delay, float damage, float speed, AudioSource audioSource)
@@ -45,9 +42,9 @@ public class Shoot : MonoBehaviour
         _audioSource = audioSource;
     }
 
-    public void ShooBulletUI()
+    private void ShooBulletUI()
     {
-        if (_canShoot && _drawLine.MousePositionList.Count >= 2) 
+        if (_canShoot && _drawLine.MousePositionList.Count >= 2)
         {
             if (_shootDelay != null)
                 StopCoroutine(_shootDelay);
@@ -83,7 +80,7 @@ public class Shoot : MonoBehaviour
         }
 
         Bullet bullet = _pool.GetObject();
-        bullet.Init(_firePoint, _damage, _speed, gameObject); 
+        bullet.Init(_firePoint, _damage, _speed, gameObject, true);
 
         if (_audioSource != null)
         {
@@ -106,10 +103,8 @@ public class Shoot : MonoBehaviour
             yield break;
         }
 
-
         Vector3 startPoint = _drawLine.MousePositionList[0];
         Vector3 endPoint = _drawLine.MousePositionList[_drawLine.MousePositionList.Count - 1];
-
 
         float distance = Vector3.Distance(startPoint, endPoint);
         float journey = 0f;
@@ -120,7 +115,6 @@ public class Shoot : MonoBehaviour
             float fractionOfJourney = journey / distance;
 
             bullet.transform.position = Vector3.Lerp(startPoint, endPoint, fractionOfJourney);
-
 
             Vector3 direction = (endPoint - startPoint).normalized;
             bullet.transform.forward = direction;

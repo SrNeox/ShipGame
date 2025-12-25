@@ -1,14 +1,16 @@
+using System;
 using _Source.Scripts.GameLogic.Ships.ShipEnemy;
 using Reflex.Attributes;
 using Reflex.Core;
 using Reflex.Injectors;
 using UnityEngine;
 
-public class SpawerEnemy : MonoBehaviour
+public class SpawnerEnemy : MonoBehaviour
 {
     [Inject] private PoolEnemies _poolEnemies;
     [Inject] private Container _container;
 
+    [SerializeField] private int _targetCount;
     [SerializeField] private Transform[] _movePoint;
     [SerializeField] private ScoreTable _scoreTable;
     [SerializeField] private ShipIconProgress _iconProgress;
@@ -16,16 +18,31 @@ public class SpawerEnemy : MonoBehaviour
     private Health _healthEnemy;
     private EnemyShip _enemyShip;
 
-    private void Start()
+    private int _countInLevel = 0;
+
+    public EnemyShip Enemy => _enemyShip;
+
+    public event Action IsOverEnemy;
+
+    public void Initialized()
     {
         Spawn();
     }
 
     private void Spawn()
     {
+        if (_countInLevel >= _targetCount)
+        {
+            Debug.Log("Отработал");
+            IsOverEnemy?.Invoke();
+            return;
+        }
+
         _enemyShip = _poolEnemies.GetObject();
         _enemyShip.transform.SetPositionAndRotation(transform.position, transform.rotation);
         _iconProgress.GetEnemy(_enemyShip);
+        
+        _countInLevel++;
 
         InitEnemy();
     }
@@ -55,12 +72,5 @@ public class SpawerEnemy : MonoBehaviour
         }
 
         _enemyShip.transform.SetPositionAndRotation(transform.position, transform.rotation);
-    }
-
-    private void DestroyBoss()
-    {
-        _healthEnemy.HealthOver -= DestroyBoss;
-        _enemyShip.Buff();
-        Destroy(_enemyShip.gameObject);
     }
 }

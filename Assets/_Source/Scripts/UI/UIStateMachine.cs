@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using YG;
 
@@ -9,10 +10,9 @@ public class UIStateMachine : MonoBehaviour
         Settings,
         MainMenu,
         GameOver,
+        Win,
         ActiveGameUi,
-        StartMenu,
         LeaderBoard,
-        MobileControl,
         Continue
     }
 
@@ -23,14 +23,16 @@ public class UIStateMachine : MonoBehaviour
     [SerializeField] private Canvas _settingsCanvas;
     [SerializeField] private Canvas _tutorialCanvas;
     [SerializeField] private Canvas _gameOverCanvas;
+    [SerializeField] private Canvas _winCanvas;
     [SerializeField] private Canvas _activeGameUiCanvas;
     [SerializeField] private Canvas _leaderBoard;
     [SerializeField] private Canvas _mobileControl;
     [SerializeField] private Canvas _continue;
     [SerializeField] private AudioSource _audioSource;
+    
+    [SerializeField] private SpawnerEnemy _spawner;
 
     private UIState _currentState = UIState.Tutorial;
-
     public UIState CurrentUI => _currentState;
 
     private void Awake()
@@ -41,7 +43,17 @@ public class UIStateMachine : MonoBehaviour
 
     private void Start()
     {
-        SwitchState(UIState.StartMenu);
+        SwitchState(UIState.ActiveGameUi);
+    }
+
+    private void OnEnable()
+    {
+        _spawner.IsOverEnemy += ShowWin;
+    }
+
+    private void OnDisable()
+    {
+        _spawner.IsOverEnemy -= ShowWin;
     }
 
     public void ShowTutorial() => SwitchState(UIState.Tutorial);
@@ -51,8 +63,8 @@ public class UIStateMachine : MonoBehaviour
     public void ShowMainMenu() => SwitchState(UIState.MainMenu);
 
     public void ShowGameOver() => SwitchState(UIState.GameOver);
-
-    public void ShowStartMenu() => SwitchState(UIState.StartMenu);
+    
+    public void ShowWin() => SwitchState(UIState.Win);
 
     public void ShowContinue() => SwitchState(UIState.Continue);
 
@@ -66,18 +78,6 @@ public class UIStateMachine : MonoBehaviour
         else
         {
             SwitchState(UIState.ActiveGameUi);
-        }
-    }
-
-    public void ShowLeaderBoard()
-    {
-        if (YG2.player.auth)
-        {
-            SwitchState(UIState.LeaderBoard);
-        }
-        else
-        {
-            YG2.OpenAuthDialog();
         }
     }
 
@@ -116,12 +116,12 @@ public class UIStateMachine : MonoBehaviour
                 break;
             case UIState.GameOver:
                 _gameOverCanvas.gameObject.SetActive(isActive);
+                break;      
+            case UIState.Win:
+                _winCanvas.gameObject.SetActive(isActive);
                 break;
             case UIState.ActiveGameUi:
                 _activeGameUiCanvas.gameObject.SetActive(isActive);
-                break;
-            case UIState.StartMenu:
-                _startMenuCanvas.gameObject.SetActive(isActive);
                 break;
             case UIState.LeaderBoard:
                 _leaderBoard.gameObject.SetActive(isActive);

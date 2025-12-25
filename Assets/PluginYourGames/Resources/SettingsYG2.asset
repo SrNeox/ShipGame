@@ -310,7 +310,7 @@ MonoBehaviour:
 
         6. Player 6:
         340000'
-      isDefault: 0
+      isDefault: 1
       isInvertSortOrder: 1
       decimalOffset: 0
       type: numeric
@@ -351,6 +351,30 @@ MonoBehaviour:
         photo: demo image
         uniqueID: 321
         extraData: 
+      - rank: 6
+        name: Player 6
+        score: 340000
+        photo: demo image
+        uniqueID: 321
+        extraData: 
+      - rank: 6
+        name: Player 6
+        score: 340000
+        photo: demo image
+        uniqueID: 321
+        extraData: 
+      - rank: 6
+        name: Player 6
+        score: 340000
+        photo: demo image
+        uniqueID: 321
+        extraData: 
+      - rank: 6
+        name: Player 6
+        score: 340000
+        photo: demo image
+        uniqueID: 321
+        extraData: 
       currentPlayer:
         rank: 5
         score: 127000
@@ -375,9 +399,10 @@ MonoBehaviour:
     syncInitSDK: 0
     loadSceneIfSDKLate: 0
     loadSceneIndex: 0
-    simulationLoadScene: 0
+    initDelaySimulation: 0
+    buildNumber: 60
   Simulation:
-    device: 0
+    device: 1
     language: en
     advIntervalSimulation: 40
     durationAdv: 0.5
@@ -419,6 +444,7 @@ MonoBehaviour:
     showFirstAdv: 0
     interAdvInterval: 0
     postponeCallByFail: 0
+    setLanguageMod: 0
     skipInterAdvAfterReward: 0
     saveLocal: 0
     saveCloud: 0

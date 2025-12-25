@@ -14,7 +14,7 @@ public class SpawnerItems : MonoBehaviour
 
     private WaitForSeconds delay;
 
-    private void Start()
+    private void OnEnable()
     {
         StartCoroutine(SpawnItems());
         delay = new(_delay);

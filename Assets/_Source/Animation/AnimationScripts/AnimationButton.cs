@@ -18,15 +18,20 @@ namespace _Source.Animation.AnimationScripts
         private void Awake()
         {
             _rectTransform = GetComponent<RectTransform>();
-
-            if (_originalScaleOnStart)
-                _originalScale = _rectTransform.localScale;
         }
-    
-        private void Start()
+
+        private void OnEnable()
         {
             if (_originalScaleOnStart)
                 _originalScale = _rectTransform.localScale;
+        }
+
+        private void OnDisable()
+        {
+            _currentTween?.Kill();
+
+            if (_rectTransform != null)
+                _rectTransform.localScale = _originalScale;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -44,14 +49,6 @@ namespace _Source.Animation.AnimationScripts
         {
             _currentTween?.Kill();
             _currentTween = _rectTransform.DOScale(_originalScale, _duration).SetEase(Ease.Linear);
-        }
-
-        void OnDisable()
-        {
-            _currentTween?.Kill();
-
-            if (_rectTransform != null)
-                _rectTransform.localScale = _originalScale;
         }
     }
 }

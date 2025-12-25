@@ -41,7 +41,9 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
-        createrEffects.Show();
+        if (createrEffects != null)
+            createrEffects.Show();
+
         HealthOver?.Invoke();
     }
 

@@ -13,6 +13,8 @@ namespace _Source.Scripts.GameLogic.StateGame
         [SerializeField] private UiHelper _helperCanvas;
         [SerializeField] private Canvas _mobileControllerCanvas;
         [SerializeField] private GameObject _shootField;
+        [SerializeField] private GameObject _bubblePrefab;
+
 
         private Health _enemyHealth;
         private Health _playerHealth;
@@ -113,8 +115,8 @@ namespace _Source.Scripts.GameLogic.StateGame
             ToggleState(_enemyShoot, true);
             ToggleState(_playerHealth, true);
             ToggleState(_playerHealth, true);
+            DisableBubble();
             
-
             if (_shootField != null)
                 _shootField.gameObject.SetActive(false);
 
@@ -131,15 +133,6 @@ namespace _Source.Scripts.GameLogic.StateGame
                 _mobileControllerCanvas.gameObject.SetActive(true);
         }
 
-        private void DisableHelper()
-        {
-            if (_hasHintCanvas)
-            {
-                _helperCanvas.gameObject.SetActive(false);
-                _hintShown = false;
-            }
-        }
-
         private void PlayerShoots()
         {
             _isShootingPhase = true;
@@ -148,10 +141,11 @@ namespace _Source.Scripts.GameLogic.StateGame
             ToggleState(DrawLine, true);
             ToggleState(_enemyShoot, false);
             ToggleState(_playerHealth, false);
+            ActiveBubble();
 
             if (_shootField != null)
                 _shootField.gameObject.SetActive(true);
-            
+
             if (_characterController != null)
                 _characterController.enabled = false;
 
@@ -165,10 +159,27 @@ namespace _Source.Scripts.GameLogic.StateGame
                 _mobileControllerCanvas.gameObject.SetActive(false);
         }
 
+        private void DisableHelper()
+        {
+            if (_hasHintCanvas)
+            {
+                _helperCanvas.gameObject.SetActive(false);
+                _hintShown = false;
+            }
+        }
+
         private void FindEnemy()
         {
             _enemyShoot = FindObjectOfType<EnemyShoot>();
-            OnSubscribeHealthOver(_enemyShoot);
+            
+            if (_enemyShoot != null)
+            {
+                OnSubscribeHealthOver(_enemyShoot);
+            }
+            else
+            {
+                Debug.LogWarning("EnemyShoot not found!");
+            }
         }
 
         private void FindPlayerHealth()
@@ -211,6 +222,17 @@ namespace _Source.Scripts.GameLogic.StateGame
         {
             if (component != null)
                 component.enabled = isActive;
+        }
+
+        private void ActiveBubble()
+        {
+            _bubblePrefab.gameObject.SetActive(true);
+            _bubblePrefab.transform.position = _playerHealth.transform.position;
+        }
+        
+        private void DisableBubble()
+        {
+            _bubblePrefab.gameObject.SetActive(false);
         }
     }
 }

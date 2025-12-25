@@ -60,6 +60,6 @@ public class ShipItemView : MonoBehaviour
 
     private void UpdateScore()
     {
-        _progress.text = $"{_targetScoreUnlock}|{YG2.saves.Score}";
+        _progress.text = $"{YG2.saves.Score}|{_targetScoreUnlock}";
     }
 }

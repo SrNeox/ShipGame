@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 312e63f99b373534f973f97c7a1cc029, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -265,7 +265,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -304,7 +304,7 @@ RectTransform:
   m_GameObject: {fileID: 8226470040307422585}
   m_LocalRotation: {x: 0.38863418, y: -0, z: -0, w: 0.9213921}
   m_LocalPosition: {x: 0, y: 0, z: 1.49}
-  m_LocalScale: {x: 0.09145105, y: 0.020543544, z: 0.061160557}
+  m_LocalScale: {x: 0.065918684, y: 0.01480796, z: 0.044085044}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4867383726946276260}
@@ -360,7 +360,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &6649639685715467768
 MonoBehaviour:
   m_ObjectHideFlags: 0

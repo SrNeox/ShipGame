@@ -9,13 +9,14 @@ public class Bullet : MonoBehaviour
     private float _arcProgress;
     private float _arcDuration;
     private bool _isArcShot = false;
+    private bool _isPlayer = false;
     private PoolBullet _poolBullet;
     private GameObject _shooter;
     private GameObject _landingIndicator;
     private Vector3 _arcTarget;
     private Vector3 _arcStartPosition;
 
-    private DrawLine _drawLine; 
+    private DrawLine _drawLine;
     private CreaterEffects _createrEffects;
 
     private void Start()
@@ -35,16 +36,18 @@ public class Bullet : MonoBehaviour
         CheckLineIntersection();
     }
 
-    public void Init(Transform position, float damage, float speedBullet, GameObject shooter)
+    public void Init(Transform position, float damage, float speedBullet, GameObject shooter, bool isPlayer = false)
     {
         _speed = speedBullet;
         _damage = damage;
         transform.SetPositionAndRotation(position.position, position.rotation);
         _isArcShot = false;
         _shooter = shooter;
+        _isPlayer = isPlayer;
     }
 
-    public void InitArc(Transform position, float damage, float duration, Vector3 target, float height, GameObject indicator, GameObject shooter)
+    public void InitArc(Transform position, float damage, float duration, Vector3 target, float height,
+        GameObject indicator, GameObject shooter)
     {
         _damage = damage;
         _arcDuration = duration;
@@ -108,13 +111,24 @@ public class Bullet : MonoBehaviour
         {
             _createrEffects.Show();
             health.TakeDamage(_damage);
+
             if (_poolBullet != null)
                 _poolBullet.ReturnObject(this);
         }
 
-        if (collider.TryGetComponent(out Bullet bullet))
+
+        if (collider.TryGetComponent(out Bullet _) && _isPlayer != true)
         {
             _createrEffects.Show();
+
+            if (_poolBullet != null)
+                _poolBullet.ReturnObject(this);
+        }
+
+        if (collider.TryGetComponent(out Barrier _) && _isPlayer != true)
+        {
+            _createrEffects.Show();
+
             if (_poolBullet != null)
                 _poolBullet.ReturnObject(this);
         }
